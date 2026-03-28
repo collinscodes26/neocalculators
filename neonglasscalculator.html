@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Collins' Neon Calculator</title>
+
+<style>
+body {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+/* Calculator Glass Look */
+.calculator {
+    width: 320px;
+    padding: 20px;
+    border-radius: 25px;
+    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+}
+
+/* Display */
+.display {
+    color: #fff;
+    font-size: 50px;
+    text-align: right;
+    margin-bottom: 20px;
+    padding: 10px;
+    min-height: 60px;
+}
+
+/* Grid */
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+/* Base Button */
+.btn {
+    height: 65px;
+    border-radius: 15px;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    background: rgba(255,255,255,0.08);
+    color: white;
+    transition: 0.2s;
+}
+
+/* Hover glow */
+.btn:hover {
+    background: rgba(255,255,255,0.15);
+    transform: scale(1.05);
+}
+
+/* Number buttons */
+.num {
+    color: #ffffff;
+}
+
+/* Function buttons */
+.func {
+    background: rgba(255,255,255,0.15);
+}
+
+/* Operators */
+.op {
+    background: linear-gradient(135deg, #ff00cc, #3333ff);
+    color: white;
+}
+
+/* Equals button stronger glow */
+.op:last-child {
+    background: linear-gradient(135deg, #00f2fe, #4facfe);
+}
+
+/* Zero button */
+.zero {
+    grid-column: span 2;
+}
+
+/* Click effect */
+.btn:active {
+    transform: scale(0.92);
+}
+</style>
+
+</head>
+<body>
+
+<div class="calculator">
+    <div id="display" class="display">0</div>
+
+    <div class="buttons">
+        <button class="btn func">AC</button>
+        <button class="btn func">±</button>
+        <button class="btn func">%</button>
+        <button class="btn op">÷</button>
+
+        <button class="btn num">7</button>
+        <button class="btn num">8</button>
+        <button class="btn num">9</button>
+        <button class="btn op">×</button>
+
+        <button class="btn num">4</button>
+        <button class="btn num">5</button>
+        <button class="btn num">6</button>
+        <button class="btn op">−</button>
+
+        <button class="btn num">1</button>
+        <button class="btn num">2</button>
+        <button class="btn num">3</button>
+        <button class="btn op">+</button>
+
+        <button class="btn num zero">0</button>
+        <button class="btn num">.</button>
+        <button class="btn op">=</button>
+    </div>
+</div>
+
+<script>
+let display = document.getElementById("display");
+let current = "0";
+
+document.querySelectorAll(".btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        let value = btn.textContent;
+
+        if (value === "AC") {
+            current = "0";
+        } 
+        else if (value === "=") {
+            try {
+                current = eval(current.replace("×", "*").replace("÷", "/").replace("−", "-"));
+            } catch {
+                current = "Error";
+            }
+        } 
+        else if (value === "±") {
+            current = (parseFloat(current) * -1).toString();
+        } 
+        else {
+            if (current === "0") current = "";
+            current += value;
+        }
+
+        display.textContent = current;
+    });
+});
+</script>
+
+</body>
+</html>
